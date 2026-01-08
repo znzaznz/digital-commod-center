@@ -1,35 +1,42 @@
 {
-	"pages": [
-		{
-			"path": "pages/index/index",
-			"style": {
-				"navigationBarTitleText": "首页"
-			}
-		},
-		{
-			"path": "pages/logs/logs",
-			"style": {
-				"navigationBarTitleText": "运行日志"
-			}
-		},
-		{
-			"path": "pages/monitor/monitor",
-			"style": {
-				"navigationBarTitleText": "资源监控"
-			}
-		},
-		{
-			"path": "pages/settings/settings",
-			"style": {
-				"navigationBarTitleText": "系统设置"
-			}
-		}
-	],
-	"globalStyle": {
-		"navigationStyle": "custom", // 这一行已经让所有页面都变成自定义导航栏了
-		"navigationBarTextStyle": "white",
-		"navigationBarBackgroundColor": "#050a0f",
-		"backgroundColor": "#050a0f"
-	},
-	"uniIdRouter": {}
+  "pages": [
+//    {
+    //      "path": "pages/boot/boot",
+    //      "style": {
+    //        "navigationStyle": "custom"
+    //      }
+    //    },
+    {
+      "path": "pages/center/center",
+      "style": {
+        "navigationBarTitleText": "控制中心"
+      }
+    },
+    {
+      "path": "pages/logs/logs",
+      "style": {
+        "navigationBarTitleText": "运行日志"
+      }
+    },
+    {
+      "path": "pages/monitor/monitor",
+      "style": {
+        "navigationBarTitleText": "资源监控"
+      }
+    },
+    {
+      "path": "pages/settings/settings",
+      "style": {
+        "navigationBarTitleText": "系统设置"
+      }
+    }
+  ],
+  "globalStyle": {
+    "navigationStyle": "custom",
+    // 这一行已经让所有页面都变成自定义导航栏了
+    "navigationBarTextStyle": "white",
+    "navigationBarBackgroundColor": "#050a0f",
+    "backgroundColor": "#050a0f"
+  },
+  "uniIdRouter": {}
 }
