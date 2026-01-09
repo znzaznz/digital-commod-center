@@ -1,11 +1,11 @@
 {
   "pages": [
-//    {
-    //      "path": "pages/boot/boot",
-    //      "style": {
-    //        "navigationStyle": "custom"
-    //      }
-    //    },
+    {
+      "path": "pages/boot/boot",
+      "style": {
+        "navigationStyle": "custom"
+      }
+    },
     {
       "path": "pages/center/center",
       "style": {
