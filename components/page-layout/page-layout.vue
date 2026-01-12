@@ -130,12 +130,11 @@ page {
 
 <style scoped>
 .page-container {
-  height: 100vh; /* 固定高度 */
+  min-height: 100vh; /* 固定高度 */
   display: flex; /* 开启flex */
   flex-direction: column;
   background-color: #050a0f;
   position: relative;
-  overflow: hidden;
 }
 
 .page-content {
@@ -145,7 +144,6 @@ page {
   padding: 20rpx;
   position: relative;
   z-index: 1;
-  overflow-y: auto; /* 内容过多时内部滚动 */
   animation: pageFadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 

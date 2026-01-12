@@ -51,12 +51,21 @@
     /* 小程序特有相关 */
     "mp-weixin" : {
         "appid" : "wxb28ba26f894f4a71",
-        "setting" : {
-            "urlCheck" : false,
-            "ignoreDevUnusedFiles" : false,
-            "ignoreUploadUnusedFiles" : false
+        "optimization" : {
+            "subPackages" : true
         },
-        "usingComponents" : true
+        "lazyCodeLoading" : "requiredComponents",
+        "setting" : {
+            "minifyJS" : true,
+            "minifyWXML" : true, // 新增：压缩页面结构，减少体积
+            "minifyWXSS" : true, // 新增：压缩样式表，减少体积
+            "urlCheck" : false,
+            "ignoreDevUnusedFiles" : true, // 改为true：本地开发时不包含未使用的文件
+            "ignoreUploadUnusedFiles" : true // 改为true：上传代码时不包含未使用的文件（核心！）
+        },
+        "usingComponents" : true,
+        "permission" : {},
+        "darkmode" : false
     },
     "mp-alipay" : {
         "usingComponents" : true

@@ -1,6 +1,5 @@
-<!-- pages/index/center.vue -->
 <template>
-  <page-layout title="监控中心" @drawerStateChange="handleDrawerState" >
+  <page-layout title="监控中心" @drawerStateChange="handleDrawerState">
 
     <!-- 1. 顶部装饰 -->
     <view class="top-decoration">
@@ -14,7 +13,7 @@
     <view class="chart-box" v-show="isChartVisible">
       <view class="chart-title">项目总体完成度</view>
       <view class="chart">
-        <gauge-chart :value="valueFromOutside" />
+        <gauge-chart :value="valueFromOutside"/>
       </view>
     </view>
 
@@ -48,7 +47,6 @@
     </view>
 
     <!-- 底部 HUD 区域 -->
-    <view class="bottom-hud-spacer"></view>
     <view class="bottom-hud-bar">
       <view class="hud-glow-line"></view>
       <view class="hud-content">
@@ -108,12 +106,6 @@ const nodes = [
 </script>
 
 <style>
-/* --- 基础设置 --- */
-page {
-  background-color: #03080c;
-  overflow-y: auto;
-}
-
 /* --- 1. 顶部装饰 (紧凑型) --- */
 .top-decoration {
   padding: 20rpx 40rpx; /* 缩小上下边距 */
@@ -244,25 +236,14 @@ page {
   border-radius: 8rpx;
 }
 
-/* --- 5. 底部 HUD (大字体) --- */
-.bottom-hud-spacer {
-  height: 200rpx;
-}
-
 .bottom-hud-bar {
-  position: fixed;
-  bottom: 40rpx;
-  left: 20rpx;
-  right: 20rpx;
-  height: 140rpx; /* 稍微增高以容纳大字 */
+  margin: 40rpx 30rpx 0 30rpx; /* 顺时针：上40, 右30, 下60, 左30 */
   background: linear-gradient(180deg, rgba(12, 38, 58, 0.95) 0%, rgba(5, 15, 25, 0.98) 100%);
   border-radius: 20rpx;
   border: 1px solid rgba(0, 242, 255, 0.4);
   box-shadow: 0 -10rpx 40rpx rgba(0, 0, 0, 0.7);
   overflow: hidden;
   backdrop-filter: blur(15px);
-  z-index: 100;
-  margin: 0 20rpx;
 }
 
 .hud-content {
@@ -270,7 +251,7 @@ page {
   justify-content: space-between;
   align-items: center;
   height: 100%;
-  padding: 0 40rpx;
+  padding: 120rpx 40rpx;
 }
 
 .hud-label {
