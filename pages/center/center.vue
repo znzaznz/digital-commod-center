@@ -1,6 +1,6 @@
 <!-- pages/index/center.vue -->
 <template>
-  <page-layout title="监控中心" @drawerStateChange="handleDrawerState" class="scroll-container">
+  <page-layout title="监控中心" @drawerStateChange="handleDrawerState" >
 
     <!-- 1. 顶部装饰 -->
     <view class="top-decoration">
@@ -14,7 +14,7 @@
     <view class="chart-box" v-show="isChartVisible">
       <view class="chart-title">项目总体完成度</view>
       <view class="chart">
-        <l-echart ref="chartRef"></l-echart>
+        <gauge-chart :value="valueFromOutside" />
       </view>
     </view>
 
@@ -70,18 +70,15 @@
       </view>
     </view>
 
-    <view class="circuit-bg"></view>
   </page-layout>
 </template>
 
 <script setup>
-import {ref, onMounted, onUnmounted, reactive} from 'vue';
-import * as echarts from '@/uni_modules/lime-echart/static/web/echarts.esm.min.js';
+import {ref, reactive} from 'vue';
+import GaugeChart from "@/components/charts/gauge-chart/gauge-chart.vue";
 
-const chartRef = ref(null);
 const isChartVisible = ref(true);
 const valueFromOutside = ref(85);
-let myChart = null;
 
 // 1. 定义底部 HUD 的数据对象
 const hudInfo = reactive({
@@ -108,161 +105,6 @@ const nodes = [
   {name: '数据接口', percent: 60},
   {name: '数据进度', percent: 60},
 ];
-
-onMounted(async () => {
-  setTimeout(async () => {
-    if (!chartRef.value) return;
-    myChart = await chartRef.value.init(echarts);
-    const option = {
-      backgroundColor: 'transparent',
-      series: [
-        // 1. 最外层：超级光晕（利用超大 shadowBlur 实现你说的“老大光晕”）
-        {
-          type: 'gauge',
-          radius: '87%',
-          startAngle: 360,
-          endAngle: 0,
-          axisLine: {
-            lineStyle: {
-              color: [[1, 'rgb(0, 255, 255)']],
-              width: 7, // 这里加宽到 40，光晕会往圆圈内部伸展很多
-              shadowBlur: 40, // 扩散范围加大
-              shadowColor: 'rgb(0,178,255)'
-            }
-          },
-          splitLine: {show: false},
-          axisTick: {show: false},
-          axisLabel: {show: false},
-          pointer: {show: false},
-          detail: {show: false}
-        },
-        // // 2. 第二层：精密虚线环
-        {
-          type: 'gauge',
-          radius: '85%',
-          startAngle: 360,
-          endAngle: 0,
-          // 核心修复点：明确指定仪表盘的分段总数
-          splitNumber: 200, // 将整个圆环分成 100 份
-          axisLine: {show: false},
-          splitLine: {show: false},
-          axisTick: {
-            show: true,
-            splitNumber: 1, // 关键：每份里只画 1 条线，这样总共就是 100 条
-            distance: 0,
-            length: 5,
-            lineStyle: {
-              color: '#00f2ff',
-              width: 2, // 这里的宽度决定了“点”的大小
-              type: 'solid'
-            },
-          },
-          axisLabel: {show: false},
-          pointer: {show: false},
-          detail: {show: false}
-        },
-        {
-          type: 'gauge',
-          radius: '70%',
-          startAngle: 360,
-          endAngle: 0,
-          axisLine: {
-            lineStyle: {
-              color: [[1, 'rgb(0, 255, 255)']],
-              width: 5, // 这里加宽到 40，光晕会往圆圈内部伸展很多
-              shadowBlur: 30, // 扩散范围加大
-              shadowColor: 'rgb(0,178,255)'
-            }
-          },
-          splitLine: {show: false},
-          axisTick: {show: false},
-          axisLabel: {show: false},
-          pointer: {show: false},
-          detail: {show: false}
-        },
-        {
-          name: '左下角小格',
-          type: 'gauge',
-          radius: '80%',      // 半径，根据需要调整，应在 60% 内部
-          startAngle: 360,    // 左下角起始角度
-          endAngle: 270,      // 左下角结束角度
-          splitNumber: 1,    // 决定小格子的密度
-          axisLine: {show: false},
-          splitLine: {show: false},
-          axisLabel: {show: false},
-          pointer: {show: false},
-          detail: {show: false},
-          axisTick: {
-            show: true,
-            length: 6,        // 小格子的“高度”
-            lineStyle: {
-              color: '#00f2ff',
-              width: 10,       // 小格子的“宽度”，增加这个值会让它更像方块
-              type: 'solid'
-            }
-          }
-        },
-        {
-          name: '右上角小格',
-          type: 'gauge',
-          radius: '80%',
-          startAngle: 180,     // 右上角起始角度
-          endAngle: 90,      // 右上角结束角度
-          splitNumber: 1,
-          axisLine: {show: false},
-          splitLine: {show: false},
-          axisLabel: {show: false},
-          pointer: {show: false},
-          detail: {show: false},
-          axisTick: {
-            show: true,
-            length: 6,
-            lineStyle: {
-              color: '#00f2ff',
-              width: 10,
-              type: 'solid'
-            }
-          }
-        },
-        {
-          type: 'gauge',
-          zlevel: 10, // 确保数字在最上层
-          radius: '0%',
-          axisLine: {show: false},
-          splitLine: {show: false},
-          axisTick: {show: false},
-          axisLabel: {show: false},
-          pointer: {show: false},
-          detail: {
-            // 1. 使用 {unit|%} 语法，这里的 unit 就是样式标签名
-            formatter: '{value}{unit|%}',
-            offsetCenter: [0, '5%'],
-            fontSize: 60, // 这是数字的大小
-            color: '#00f2ff',
-            fontFamily: 'DigitalFont',
-
-            // 2. 在 rich 属性里定义 unit 标签的具体样式
-            rich: {
-              unit: {
-                fontSize: 35,        // 百分号的大小，调小一点
-                color: '#00f2ff',    // 颜色保持一致
-                padding: [0, 0, 0, 0],  // 通过 padding 微调位置：[上, 右, 下, 左]
-                // 下边距 10 可以把百分号往上提一点，左边距 5 增加和数字的间距
-                fontWeight: 'bold',
-              }
-            }
-          },
-          data: [{value: valueFromOutside.value}]
-        }
-      ]
-    };
-    myChart.setOption(option);
-  }, 300);
-});
-
-onUnmounted(() => {
-  if (myChart) myChart.dispose();
-});
 </script>
 
 <style>
@@ -270,18 +112,6 @@ onUnmounted(() => {
 page {
   background-color: #03080c;
   overflow-y: auto;
-}
-
-.circuit-bg {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: -1;
-  opacity: 0.1;
-  background-image: radial-gradient(#00f2ff 1px, transparent 0);
-  background-size: 30px 30px;
 }
 
 /* --- 1. 顶部装饰 (紧凑型) --- */
