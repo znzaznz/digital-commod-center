@@ -89,7 +89,7 @@ const handleDrawerState = (isOpen) => {
 }
 
 .chart-title {
-  color: #00f2ff;
+  color: white;
   font-weight: 900;
   text-align: center;
   font-size: 32rpx;
@@ -101,7 +101,7 @@ const handleDrawerState = (isOpen) => {
 .activities-container {
   flex: 1;
   min-height: 0; /* 关键：允许 flex 子项内部滚动而不撑开父级 */
-  padding: 20rpx 30rpx 40rpx;
+  padding: 20rpx 30rpx 20rpx;
   box-sizing: border-box;
 }
 
