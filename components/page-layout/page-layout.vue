@@ -38,7 +38,6 @@
             :class="{ 'active-item': currentPath === item.path }"
             @tap="navTo(item.path)"
         >
-          <text class="menu-icon">&gt;</text>
           <text class="menu-text">{{ item.name }}</text>
         </view>
       </view>
